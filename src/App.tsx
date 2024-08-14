@@ -162,6 +162,7 @@ function App() {
 
             <SignPsbtCard />
             <SignMessageCard />
+            <SignDataCard />
             <PushTxCard />
             <PushPsbtCard />
             <SendBitcoin />
@@ -244,6 +245,37 @@ function SignMessageCard() {
         }}
       >
         Sign Message
+      </Button>
+    </Card>
+  );
+}
+
+function SignDataCard() {
+  const [data, setData] = useState("hello world~");
+  const [signature, setSignature] = useState("");
+  return (
+    <Card size="small" title="Sign Data" style={{ width: 300, margin: 10 }}>
+      <div style={{ textAlign: "left", marginTop: 10 }}>
+        <div style={{ fontWeight: "bold" }}>Data:</div>
+        <Input
+          defaultValue={data}
+          onChange={(e) => {
+            setData(e.target.value);
+          }}
+        ></Input>
+      </div>
+      <div style={{ textAlign: "left", marginTop: 10 }}>
+        <div style={{ fontWeight: "bold" }}>Signature:</div>
+        <div style={{ wordWrap: "break-word" }}>{signature}</div>
+      </div>
+      <Button
+        style={{ marginTop: 10 }}
+        onClick={async () => {
+          const signature = await (window as any).unisat.signData(data, "schnorr");
+          setSignature(signature);
+        }}
+      >
+        Sign Data
       </Button>
     </Card>
   );
